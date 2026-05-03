@@ -161,7 +161,7 @@ const Header = () => (
 
       {/* Direita: Botão de Currículo */}
       <div className="hidden md:flex flex-1 justify-end">
-        <a href="/Eduardo marota - Curriculo.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 bg-slate-900/50 text-slate-300 hover:text-amber-400 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all font-medium text-sm">
+        <a href="Eduardo Marota da Silva - Curriculo.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 bg-slate-900/50 text-slate-300 hover:text-amber-400 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all font-medium text-sm">
           <Download size={18} />
           Baixar Currículo
         </a>
