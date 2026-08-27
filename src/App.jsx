@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   BarChart3, 
   Database, 
@@ -11,7 +11,7 @@ import {
   Download
 } from 'lucide-react';
 
-// --- ÍCONES PERSONALIZADOS (Substitutos para as marcas removidas do lucide-react) ---
+// --- ÍCONES PERSONALIZADOS ---
 const Github = ({ size = 24, className = "" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4"></path>
@@ -27,25 +27,32 @@ const Linkedin = ({ size = 24, className = "" }) => (
 );
 
 // --- DADOS DO PORTFÓLIO ---
-// Aqui pode editar facilmente as informações do seu site
 const personalInfo = {
   name: "Eduardo Marotta",
-  role: "Data Scientist & Analytics Engineer",
-  bio: "Especialista em transformar dados complexos em inteligência de negócios. Com sólida base em desenvolvimento e engenharia de dados, integro ecossistemas na nuvem (AWS), construo pipelines robustos (Python, SQL) e desenvolvo dashboards interativos (Power BI) que guiam decisões estratégicas e maximizam resultados.",
-  email: "edumarotta@gmail.com",
+  role: "Data Engineer & Analytics Specialist",
+  bio: "Especialista em Engenharia de Dados com ampla experiência em desenvolvimento de software e pipelines ETL/ELT. Domínio na construção de arquiteturas escaláveis, modelagem dimensional (Star Schema), processamento distribuído (PySpark, DuckDB) e integração end-to-end com Power BI.",
+  email: "oseuemail@exemplo.com",
   github: "https://github.com/edumarotta",
-  linkedin: "https://www.linkedin.com/in/eduardomarottadev"
+  linkedin: "https://www.linkedin.com/in/eduardomarottadev/"
 };
 
 const skills = [
-  "Python", "SQL", "Power BI", "Tableau", "Machine Learning", 
-  "Pandas", "Scikit-Learn", "Estatística", "Storytelling com Dados"
+  "Python", "PySpark", "DuckDB", "Apache Parquet", "SQL Server", "Oracle SQL", 
+  "AWS", "ETL / ELT", "Data Warehouse", "Star Schema", "Power BI", "FME Desktop"
 ];
 
-// ORDENADOS PELA CADEIA DE VALOR DO NEGÓCIO (Business Value Chain)
 const projects = [
   {
     id: 1,
+    title: "E-Commerce & Logística End-to-End Analytics",
+    category: "Engenharia de Dados & Analytics",
+    description: "Pipeline analítico end-to-end simulando o fluxo de e-commerce. Abrange desde a ingestão de dados brutos operacionais (OLTP) com inconsistências reais via Python (Faker/Pandas) e processamento distribuído com PySpark, até a estruturação de um Data Warehouse analítico (OLAP) em Esquema Estrela com DuckDB, armazenamento em Apache Parquet e disponibilização em dashboard executivo no Power BI.",
+    tags: ["PySpark", "DuckDB", "Apache Parquet", "Python", "Power BI", "Data Warehouse", "Esquema Estrela"],
+    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiYjM2NjViMDEtZWRlYy00OGI1LWEyNjctY2UwZWU5ODlkZjYyIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
+    githubUrl: "https://github.com/edumarotta/ecommerce-end-to-end-analytics/tree/main",
+  },
+  {
+    id: 2,
     title: "Dashboard Financeiro",
     category: "Power BI",
     description: "Este dashboard apresenta uma visão clara e integrada da saúde financeira do negócio. Ele consolida indicadores essenciais — Receita, Despesas, Impostos e Lucro — permitindo avaliar rapidamente o desempenho geral. A análise mensal destaca variações positivas e negativas ao longo do tempo, enquanto o indicador de Margem resume a eficiência operacional.",
@@ -53,23 +60,7 @@ const projects = [
     iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiYWJjN2RjNDEtNDk2NS00MTBmLTllYzMtMjk0ODFlNzFiNDE5IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9", 
   },
   {
-    id: 2,
-    title: "Gestão de Projetos e CRM",
-    category: "Power BI",
-    description: "Dashboard focado na gestão do funil de vendas e acompanhamento de projetos. Permite rastrear toda a jornada do cliente, desde a geração de leads e oportunidades até a entrega final (Prospecção à Finalização). Destaca-se pelo controle financeiro detalhado, comparando valores orçados versus pagos ao longo do tempo, e pela análise de sazonalidade no fechamento de contratos, garantindo previsibilidade de receita e eficiência comercial.",
-    tags: ["Power BI", "CRM", "Funil de Vendas", "Projetos", "KPIs"],
-    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiZmJiZTkxMGQtOTBkYi00ZWQ3LWFhNDYtMTYzMjM3NGRiODg5IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
-  },
-  {
     id: 3,
-    title: "Dashboard de Vendas",
-    category: "Power BI",
-    description: "Painel interativo focado no acompanhamento da performance comercial. Apresenta métricas cruciais como faturamento total, ticket médio e volume de vendas. Com análises detalhadas por período, região e desempenho de produtos/vendedores, o dashboard facilita a identificação de tendências de mercado e o direcionamento estratégico da equipe.",
-    tags: ["Power BI", "Vendas", "Performance Comercial", "Faturamento"],
-    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiNDNhZTZmMjItYzlkMi00YjNkLWE4ZmEtYWU2ODg0ZGNhMjg4IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
-  },
-  {
-    id: 4,
     title: "Dashboard de Compras",
     category: "Power BI",
     description: "O dashboard oferece uma visão estratégica das compras realizadas pela empresa, permitindo identificar rapidamente quanto se gasta, onde se gasta, com quem se gasta e como esses gastos evoluem ao longo do tempo. Ele reúne indicadores essenciais e gráficos interativos que facilitam decisões operacionais e gerenciais.",
@@ -77,35 +68,19 @@ const projects = [
     iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiOGQ4ZjBlNWMtYTllMy00YTFiLTk4Y2QtNThjYjQyODViMTc2IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
   },
   {
+    id: 4,
+    title: "Relatório de Vendas",
+    category: "Power BI",
+    description: "Monitoramento detalhado do desempenho comercial da empresa. Permite analisar o volume de vendas, faturamento por período, performance de produtos e o atingimento de metas, facilitando a tomada de decisão da equipe comercial.",
+    tags: ["Comercial", "Vendas", "Power BI", "KPIs"],
+    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiNDNhZTZmMjItYzlkMi00YjNkLWE4ZmEtYWU2ODg0ZGNhMjg4IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
+  },
+  {
     id: 5,
-    title: "Dashboard de Produção",
+    title: "Dashboard de Funcionários (RH)",
     category: "Power BI",
-    description: "Oferece um monitoramento detalhado do desempenho no chão de fábrica. Destaca indicadores operacionais críticos, como volume de produção (itens aprovados vs. rejeitados), balanço de horas produtivas e paradas, e acompanhamento histórico mensal. Apresenta métricas essenciais de eficiência, como os índices de Disponibilidade e Qualidade, fundamentais para a análise de OEE (Overall Equipment Effectiveness) e apoio à tomada de decisão para melhoria contínua.",
-    tags: ["Power BI", "Produção", "OEE", "Eficiência Industrial", "KPIs"],
-    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiODBmMjcxZTYtMTAzYS00NGFiLWJiMmYtYTM5ZWYxZGEyMTYwIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
-  },
-  {
-    id: 6,
-    title: "Análise de Logística e Entregas",
-    category: "Power BI & SQL",
-    description: "Monitorização de KPIs de logística, tempo de entrega e estrangulamentos operacionais. Dados extraídos da base de dados via SQL e visualizados no Power BI.",
-    tags: ["SQL Server", "Power BI", "Business Intelligence"],
-    iframeUrl: null, 
-  },
-  {
-    id: 7,
-    title: "Dashboard de RH (Visão Estratégica)",
-    category: "Power BI",
-    description: "Painel focado na gestão estratégica de Recursos Humanos. Destaca-se pelo uso da Árvore de Decomposição (Decomposition Tree) para aprofundar a análise da distribuição de colaboradores por área e cargo de forma interativa. Acompanha de perto KPIs vitais de movimentação de pessoal, como contratações, demissões, headcount ativo e taxa de turnover. Também fornece recortes demográficos por cidade e gênero, auxiliando em políticas de diversidade e retenção de talentos.",
-    tags: ["Power BI", "Recursos Humanos", "People Analytics", "Turnover", "DAX"],
-    iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiZjEyY2Q5ZDMtMDgwNi00NzU1LWJkODMtNGU4ZmEzZTViMWVhIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
-  },
-  {
-    id: 8,
-    title: "Dashboard de Funcionários (People Analytics)",
-    category: "Power BI",
-    description: "Este dashboard oferece uma visão completa sobre o quadro de colaboradores. Ele permite monitorar indicadores-chave de Recursos Humanos, como taxa de rotatividade (turnover), headcount, evolução do quadro e distribuição demográfica. A ferramenta é essencial para apoiar estratégias de retenção de talentos e gestão humanizada baseada em dados.",
-    tags: ["Power BI", "Recursos Humanos", "People Analytics", "KPIs"],
+    description: "Visão estratégica sobre o capital humano (People Analytics). Acompanhamento de indicadores fundamentais de RH como headcount, turnover, perfil demográfico dos colaboradores e custos com pessoal para otimização da gestão de pessoas.",
+    tags: ["RH", "People Analytics", "Gestão", "Power BI"],
     iframeUrl: "https://app.powerbi.com/view?r=eyJrIjoiZWViYWE2OGItM2MxYi00YzE3LWFkODQtMTcxNTllOWRjZmJmIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9",
   }
 ];
@@ -161,7 +136,7 @@ const Header = () => (
 
       {/* Direita: Botão de Currículo */}
       <div className="hidden md:flex flex-1 justify-end">
-        <a href="Eduardo Marota da Silva - Curriculo.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 bg-slate-900/50 text-slate-300 hover:text-amber-400 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all font-medium text-sm">
+        <a href="/seu-curriculo.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 bg-slate-900/50 text-slate-300 hover:text-amber-400 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all font-medium text-sm">
           <Download size={18} />
           Baixar Currículo
         </a>
@@ -185,10 +160,10 @@ const Hero = () => (
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-100 tracking-tight leading-[1.1]">
           <span className="block mb-3 text-3xl md:text-4xl text-slate-400 font-medium">Especialista em</span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 drop-shadow-sm block pb-2">
-            Data Science &
+            Data Engineering
           </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
-            Analytics.
+            & Analytics.
           </span>
         </h1>
         
@@ -209,12 +184,9 @@ const Hero = () => (
       {/* Coluna da Direita: Foto de Perfil & Badges */}
       <div className="flex-1 relative w-full max-w-md lg:max-w-none mt-10 lg:mt-0">
         
-        {/* Caixa Principal (Espaço para a sua foto) */}
         <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden border border-slate-700/50 bg-slate-900/50 backdrop-blur-sm group shadow-2xl">
-          {/* Efeito de brilho ao fundo da imagem */}
           <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-blue-500/10 opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
           
-          {/* PLACEHOLDER: Mostrado enquanto você não põe a sua foto */}
           <div className="absolute inset-0 flex items-center justify-center text-slate-500">
              <div className="text-center">
                <div className="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-700 shadow-inner">
@@ -224,13 +196,10 @@ const Hero = () => (
              </div>
           </div>
           
-          {/* PARA COLOCAR A SUA FOTO:
-              1. Coloque a foto na pasta 'public' do seu projeto (ex: foto-eduardo.jpg)
-              2. Descomente a linha abaixo e mude o src para "/foto-eduardo.jpg" */}
-          {/* <img src="/foto-eduardo.jpg" alt="Eduardo Marotta" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" /> */}
+          {/* Coloque sua foto na pasta 'public' e descomente abaixo: */}
+          {/* <img src="/sua-foto.jpg" alt="Eduardo Marotta" className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" /> */}
         </div>
 
-        {/* Badge Flutuante 1 - Esquerda Inferior */}
         <div className="absolute -bottom-8 -left-8 lg:-left-12 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-4 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] animate-[bounce_4s_infinite]">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-500/20 text-blue-400 rounded-xl">
@@ -238,12 +207,11 @@ const Hero = () => (
             </div>
             <div>
               <p className="text-sm font-bold text-slate-200">Data Pipelines</p>
-              <p className="text-xs text-slate-400">AWS, Oracle & SQL</p>
+              <p className="text-xs text-slate-400">PySpark & SQL</p>
             </div>
           </div>
         </div>
 
-        {/* Badge Flutuante 2 - Direita Superior */}
         <div className="absolute -top-8 -right-8 lg:-right-4 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-4 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] animate-[bounce_5s_infinite_1s]">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-amber-500/20 text-amber-400 rounded-xl">
@@ -287,10 +255,8 @@ const Skills = () => (
 const ProjectCard = ({ project }) => (
   <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-colors group backdrop-blur-sm flex flex-col">
     
-    {/* Área do Power BI ou Imagem do Projeto - ALTURA AUMENTADA AQUI */}
     <div className="w-full h-[400px] md:h-[550px] lg:h-[650px] bg-slate-950 relative border-b border-slate-800">
       {project.iframeUrl ? (
-        // Renderiza o Dashboard do Power BI
         <iframe 
           title={project.title}
           className="w-full h-full border-0"
@@ -298,7 +264,6 @@ const ProjectCard = ({ project }) => (
           allowFullScreen={true}
         ></iframe>
       ) : (
-        // Placeholder se não houver Power BI
         <div className="w-full h-full flex flex-col items-center justify-center text-slate-700">
           <LineChart size={64} className="mb-4 opacity-50" />
           <span className="text-lg font-medium">Dashboard / Código não incorporado</span>
@@ -306,7 +271,6 @@ const ProjectCard = ({ project }) => (
       )}
     </div>
 
-    {/* Informações do Projeto */}
     <div className="p-8">
       <div className="text-sm font-bold text-amber-500 tracking-wider uppercase mb-2">
         {project.category}
@@ -327,12 +291,12 @@ const ProjectCard = ({ project }) => (
       <div className="flex justify-between items-center pt-6 border-t border-slate-800/50">
         {project.iframeUrl && (
           <a href={project.iframeUrl} target="_blank" rel="noreferrer" className="text-sm flex items-center gap-2 text-slate-300 hover:text-amber-400 transition-colors font-medium">
-            <ExternalLink size={18} /> Abrir em Ecrã Inteiro
+            <ExternalLink size={18} /> Abrir em Tela Cheia
           </a>
         )}
         {project.githubUrl && (
           <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-sm flex items-center gap-2 text-slate-300 hover:text-amber-400 transition-colors ml-auto font-medium">
-            <Github size={18} /> Ver Código
+            <Github size={18} /> Ver Código no GitHub
           </a>
         )}
       </div>
@@ -347,11 +311,10 @@ const Portfolio = () => (
         <Database className="text-amber-400" size={32} /> Projetos em Destaque
       </h2>
       <p className="text-slate-400 max-w-2xl text-lg">
-        Explore alguns dos meus trabalhos recentes. Os dashboards abaixo são interativos, pode aplicar filtros e explorar os dados diretamente por aqui.
+        Explore alguns dos meus trabalhos recentes. Os dashboards abaixo são interativos, você pode aplicar filtros e explorar os dados diretamente por aqui.
       </p>
     </div>
 
-    {/* GRADE ATUALIZADA PARA UMA COLUNA SÓ */}
     <div className="grid grid-cols-1 gap-16">
       {projects.map(project => (
         <ProjectCard key={project.id} project={project} />
@@ -387,34 +350,6 @@ const Footer = () => (
 );
 
 export default function App() {
-  
-  // Efeito para alterar o Título e o Ícone (Favicon) da página
-  useEffect(() => {
-    // VOCÊ PODE ALTERAR O TEXTO ABAIXO PARA MUDAR O NOME DA ABA DO NAVEGADOR
-    document.title = "Eduardo Marotta | Data Scientist & Analytics Engineer";
-
-    // Criando o ícone dinamicamente baseado no seu logo (E amarelo, M vermelho)
-    const faviconSvg = encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100" height="100" rx="20" fill="#020617" />
-        <rect x="22" y="25" width="10" height="50" rx="5" fill="#f59e0b" />
-        <rect x="36" y="25" width="40" height="10" rx="5" fill="#f59e0b" />
-        <rect x="36" y="45" width="28" height="10" rx="5" fill="#f59e0b" />
-        <rect x="36" y="65" width="40" height="10" rx="5" fill="#f59e0b" />
-        <path d="M 8 76 C 14 40, 22 16, 30 16 C 38 16, 44 60, 50 60 C 56 60, 66 20, 74 20 C 82 20, 86 56, 92 72" fill="none" stroke="#ef4444" stroke-width="8" stroke-linecap="round" />
-      </svg>
-    `);
-    
-    // Injetando o ícone na página
-    let link = document.querySelector("link[rel~='icon']");
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'icon';
-      document.head.appendChild(link);
-    }
-    link.href = `data:image/svg+xml,${faviconSvg}`;
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 font-sans selection:bg-amber-500/30">
       <Header />
